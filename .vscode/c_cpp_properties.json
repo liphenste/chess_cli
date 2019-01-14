@@ -1,16 +1,14 @@
 {
     "configurations": [{
-        "name": "Win32",
+        "name": "MinGW",
+        "intelliSenseMode": "gcc-x64",
+        "compilerPath": "C:/mingw/bin/gcc.exe",
         "includePath": [
-            "${workspaceFolder}/**"
+            "${workspaceFolder}"
         ],
-        "defines": [
-            "_DEBUG",
-            "UNICODE",
-            "_UNICODE"
-        ],
+        "defines": [],
         "cStandard": "c11",
-        "intelliSenseMode": "msvc-x64"
+        "cppStandard": "c++14"
     }],
     "version": 4
 }

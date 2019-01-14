@@ -1,2 +1,2 @@
-main.o: main.cc model.h view.h controller.h gameState.h CLIView.h \
- CLIController.h
+main.o: main.cc controller.h model.h view.h CLIController.h CLIView.h \
+ gameState.h colour.h grid.h piece.h square.h

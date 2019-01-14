@@ -1,61 +1,41 @@
 #include "grid.h"
 #include <iostream>
+#include <string>
 #include "colour.h"
 #include "piece.h"
-
-// Square Class
-
-struct Grid::Square {
-  char file;
-  char rank;
-  Colour c;
-  Piece *piece;
-
-  Square(char file, char rank, Colour c)
-      : file{file}, rank{rank}, c{c}, piece{nullptr} {}
-  Square(char file, char rank, Colour c, Piece *piece)
-      : file{file}, rank{rank}, c{c}, piece{piece} {}
-
-  std::ostream &operator<<(std::ostream &out, const Square &s) {
-    if (piece == nullptr)
-      out << "No piece";
-    else
-      out << *piece;
-    out << " on ";
-    out << file << rank;
-    out << (c == WHITE ? " (white square)" : " (black square)");
-    return out;
-  }
-};
-
-std::ostream &operator<<(std::ostream &out, const Square &s) {
-  out << file << rank;
-  out << (c == WHITE ? " (white)" : " (black)");
-  return out;
-}
-
-// Grid Class
 
 Grid::Grid() {
   for (char f = 'a'; f <= 'h'; f++) {
     for (char r = '1'; r <= '8'; r++) {
       if ((f + r) % 2)
-        theGrid[string() + f + r] = Square(f, r, WHITE);
+        theGrid[std::string() + f + r] =
+            std::make_unique<Square>(f, r, Colour::WHITE);
       else
-        theGrid[string() + f + r] = Square(f, r, BLACK);
+        theGrid[std::string() + f + r] =
+            std::make_unique<Square>(f, r, Colour::BLACK);
     }
   }
-  std::cout << theGrid["h1"];  // h1 should be white
+  std::cout << *(theGrid["h1"]);  // h1 should be white
 }
 
 void Grid::addPiece(Piece *piece, std::string pos) {
-  delete theGrid[pos].piece;  // in case a piece is here
-  theGrid[pos].piece = piece;
+  theGrid[pos]->piece = piece;
 }
 
 void Grid::removePiece(std::string pos) {
-  delete theGrid[pos].piece;
-  theGrid[pos].piece = nullptr;
+  if (theGrid[pos]->piece) delete theGrid[pos]->piece;
+  theGrid[pos]->piece = nullptr;
 }
 
-std::ostream &operator<<(std::ostream &out, const Grid &g) {}
+std::ostream &operator<<(std::ostream &out, const Grid &g) {
+  out << "__________________" << std::endl;
+  for (char f = '8'; f >= '1'; f--) {
+    out << "|";
+    for (char r = 'a'; r <= 'h'; r++) {
+      out << g.theGrid.at(std::string() + f + r)->piece->nameLong();
+    }
+    out << "|" << std::endl;
+  }
+  out << "__________________" << std::endl;
+  return out;
+}

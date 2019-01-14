@@ -1,6 +1,14 @@
 #ifndef BISHOP_H
 #define BISHOP_H
 
-class Bishop {};
+#include "piece.h"
+
+class Bishop : public Piece {
+ public:
+  Bishop(Colour colour);
+  std::string nameLongImpl() override;
+  char nameShortImpl() override;
+  char nameCharImpl() override;
+};
 
 #endif

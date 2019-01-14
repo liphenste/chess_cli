@@ -1,27 +1,47 @@
 #include "gameState.h"
 
-void GameState::emptyState() { Grid::Grid(); }
+#include "bishop.h"
+#include "king.h"
+#include "knight.h"
+#include "pawn.h"
+#include "queen.h"
+#include "rook.h"
+
+GameState::GameState()
+    : turn{Colour::WHITE}, move{1}, whiteCastled{false}, blackCastled{false} {
+  startState();
+}
 
 void GameState::startState() {
-  Grid::Grid();
+  position = Grid();
 
-  Grid::addPiece(new Rook(WHITE), "a1");
-  Grid::addPiece(new Knight(WHITE), "b1");
-  Grid::addPiece(new Bishop(WHITE), "c1");
-  Grid::addPiece(new Queen(WHITE), "d1");
-  Grid::addPiece(new King(WHITE), "e1");
-  Grid::addPiece(new Bishop(WHITE), "f1");
-  Grid::addPiece(new Knight(WHITE), "g1");
-  Grid::addPiece(new Rook(WHITE), "h1");
-  for (char f = 'a'; f <= 'h'; f++) Grid::addPiece(new Pawn(WHITE), f + "2");
+  position.addPiece(new Rook(Colour::WHITE), "a1");
+  position.addPiece(new Knight(Colour::WHITE), "b1");
+  position.addPiece(new Bishop(Colour::WHITE), "c1");
+  position.addPiece(new Queen(Colour::WHITE), "d1");
+  position.addPiece(new King(Colour::WHITE), "e1");
+  position.addPiece(new Bishop(Colour::WHITE), "f1");
+  position.addPiece(new Knight(Colour::WHITE), "g1");
+  position.addPiece(new Rook(Colour::WHITE), "h1");
+  for (char f = 'a'; f <= 'h'; f++)
+    position.addPiece(new Pawn(Colour::WHITE), f + "2");
 
-  Grid::addPiece(new Rook(BLACK), "a8");
-  Grid::addPiece(new Knight(BLACK), "b8");
-  Grid::addPiece(new Bishop(BLACK), "c8");
-  Grid::addPiece(new Queen(BLACK), "d8");
-  Grid::addPiece(new King(BLACK), "e8");
-  Grid::addPiece(new Bishop(BLACK), "f8");
-  Grid::addPiece(new Knight(BLACK), "g8");
-  Grid::addPiece(new Rook(BLACK), "h8");
-  for (char f = 'a'; f <= 'h'; f++) Grid::addPiece(new Pawn(BLACK), f + "7");
+  position.addPiece(new Rook(Colour::BLACK), "a8");
+  position.addPiece(new Knight(Colour::BLACK), "b8");
+  position.addPiece(new Bishop(Colour::BLACK), "c8");
+  position.addPiece(new Queen(Colour::BLACK), "d8");
+  position.addPiece(new King(Colour::BLACK), "e8");
+  position.addPiece(new Bishop(Colour::BLACK), "f8");
+  position.addPiece(new Knight(Colour::BLACK), "g8");
+  position.addPiece(new Rook(Colour::BLACK), "h8");
+  for (char f = 'a'; f <= 'h'; f++)
+    position.addPiece(new Pawn(Colour::BLACK), f + "7");
+}
+
+GameState::~GameState() {
+  for (char f = 'a'; f <= 'h'; f++) {
+    for (char r = '1'; r <= '8'; r++) {
+      position.removePiece(std::string() + f + r);
+    }
+  }
 }

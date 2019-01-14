@@ -2,10 +2,12 @@
 #define GRID_H
 
 #include <map>
+#include <memory>
+#include "piece.h"
+#include "square.h"
 
 class Grid {
-  class Square;
-  std::map<std::string, Square> theGrid;
+  std::map<std::string, std::unique_ptr<Square>> theGrid;
 
  public:
   Grid();
