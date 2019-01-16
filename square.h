@@ -14,8 +14,8 @@ class Square {
   Square(char file, char rank, Colour c);
   Square(char file, char rank, Colour c, Piece *piece);
 
-  Piece *getPiece() const;
-
+  void setPiece(Piece *p);
+  std::string nameShort();
   friend std::ostream &operator<<(std::ostream &out, const Square &s);
 };
 

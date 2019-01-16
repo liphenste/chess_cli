@@ -18,6 +18,8 @@ class GameState : public Model {
   GameState();  // sets position to game start
   ~GameState();
   void startState();
+
+  friend std::ostream &operator<<(std::ostream &out, const GameState &g);
 };
 
 #endif

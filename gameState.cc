@@ -13,8 +13,6 @@ GameState::GameState()
 }
 
 void GameState::startState() {
-  position = Grid();
-
   position.addPiece(new Rook(Colour::WHITE), "a1");
   position.addPiece(new Knight(Colour::WHITE), "b1");
   position.addPiece(new Bishop(Colour::WHITE), "c1");
@@ -24,7 +22,7 @@ void GameState::startState() {
   position.addPiece(new Knight(Colour::WHITE), "g1");
   position.addPiece(new Rook(Colour::WHITE), "h1");
   for (char f = 'a'; f <= 'h'; f++)
-    position.addPiece(new Pawn(Colour::WHITE), f + "2");
+    position.addPiece(new Pawn(Colour::WHITE), (std::string() + f + '2'));
 
   position.addPiece(new Rook(Colour::BLACK), "a8");
   position.addPiece(new Knight(Colour::BLACK), "b8");
@@ -35,7 +33,7 @@ void GameState::startState() {
   position.addPiece(new Knight(Colour::BLACK), "g8");
   position.addPiece(new Rook(Colour::BLACK), "h8");
   for (char f = 'a'; f <= 'h'; f++)
-    position.addPiece(new Pawn(Colour::BLACK), f + "7");
+    position.addPiece(new Pawn(Colour::BLACK), (std::string() + f + '7'));
 }
 
 GameState::~GameState() {
@@ -44,4 +42,13 @@ GameState::~GameState() {
       position.removePiece(std::string() + f + r);
     }
   }
+}
+
+std::ostream &operator<<(std::ostream &out, const GameState &g) {
+  out << "Turn: " << (g.turn == Colour::WHITE ? "White" : "Black") << std::endl;
+  out << "Move: " << g.move << std::endl;
+  out << "White 0-0/0-0-0: " << g.whiteCastled << std::endl;
+  out << "Black 0-0/0-0-0: " << g.blackCastled << std::endl;
+  out << g.position << std::endl;
+  return out;
 }

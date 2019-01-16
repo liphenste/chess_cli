@@ -15,11 +15,11 @@ Grid::Grid() {
             std::make_unique<Square>(f, r, Colour::BLACK);
     }
   }
-  std::cout << *(theGrid["h1"]);  // h1 should be white
+  // std::cout << *(theGrid["h1"]) << std::endl;  // h1 should be white
 }
 
-void Grid::addPiece(Piece *piece, std::string pos) {
-  theGrid[pos]->piece = piece;
+void Grid::addPiece(Piece *thePiece, std::string pos) {
+  theGrid[pos]->setPiece(thePiece);
 }
 
 void Grid::removePiece(std::string pos) {
@@ -28,14 +28,15 @@ void Grid::removePiece(std::string pos) {
 }
 
 std::ostream &operator<<(std::ostream &out, const Grid &g) {
-  out << "__________________" << std::endl;
+  out << "-------------------------" << std::endl;
   for (char f = '8'; f >= '1'; f--) {
     out << "|";
     for (char r = 'a'; r <= 'h'; r++) {
-      out << g.theGrid.at(std::string() + f + r)->piece->nameLong();
+      out << g.theGrid.at(std::string() + r + f)->nameShort() << "|";
     }
-    out << "|" << std::endl;
+    out << std::endl;
+    out << "-------------------------" << std::endl;
   }
-  out << "__________________" << std::endl;
+  out << std::endl;
   return out;
 }

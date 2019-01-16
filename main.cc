@@ -17,6 +17,6 @@ int main(int argc, char* argv[]) {
   for (int i = 1; i < argc; ++i) args.emplace_back(argv[i]);
   for (auto& a : args) cout << a << endl;
   */
-
   GameState game;
+  std::cout << game << std::endl;
 }
