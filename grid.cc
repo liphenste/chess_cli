@@ -28,15 +28,14 @@ void Grid::removePiece(std::string pos) {
 }
 
 std::ostream &operator<<(std::ostream &out, const Grid &g) {
-  out << "-------------------------" << std::endl;
+  out << "-----------------" << std::endl;
   for (char f = '8'; f >= '1'; f--) {
     out << "|";
     for (char r = 'a'; r <= 'h'; r++) {
       out << g.theGrid.at(std::string() + r + f)->nameShort() << "|";
     }
     out << std::endl;
-    out << "-------------------------" << std::endl;
+    out << "-----------------" << std::endl;
   }
-  out << std::endl;
   return out;
 }

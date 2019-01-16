@@ -8,7 +8,7 @@ Square::Square(char file, char rank, Colour c, Piece *piece)
 
 void Square::setPiece(Piece *p) { piece = p; }
 
-std::string Square::nameShort() { return piece ? piece->nameShort() : "  "; }
+std::string Square::nameShort() { return piece ? piece->nameShort() : " "; }
 
 std::ostream &operator<<(std::ostream &out, const Square &s) {
   if (s.piece == nullptr)

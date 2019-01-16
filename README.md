@@ -8,3 +8,4 @@ An option will be given to toggle a visual display, so the player can choose whe
 
 - Application of current CS knowledge towards an interesting project
 - Programming an interface that motivates my own chess learning (i.e. by use of blindfold)
+

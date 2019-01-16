@@ -18,5 +18,6 @@ int main(int argc, char* argv[]) {
   for (auto& a : args) cout << a << endl;
   */
   GameState game;
-  std::cout << game << std::endl;
+  game.setFEN("4k3/5p2/8/3bq3/6Q1/8/5B2/5K2 w - - 0 1");
+  std::cout << game;
 }
