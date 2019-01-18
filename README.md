@@ -42,6 +42,8 @@ Here are some example FENs to try out:
 
 <h2>Setup</h2>
 
+**gcc** and **npm** are required for dependencies and compilation.
+
 Open a bash instance and navigate to your desired directory.
 Clone the repo:
 ```bash
