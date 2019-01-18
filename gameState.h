@@ -29,6 +29,8 @@ class GameState : public Model {
   // ie. 1. e4 FEN: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1
   void setFEN(std::string fen);  // assumes the given string is a valid FEN
   std::string getFEN();
+  void playMove(std::string move);
+  void printPosition();
 
   friend std::ostream &operator<<(std::ostream &out, const GameState &g);
 };

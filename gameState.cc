@@ -134,10 +134,10 @@ void GameState::setFEN(std::string fen) {
   ss >> s;
   turn = s == "w" ? Colour::WHITE : Colour::BLACK;
   ss >> s;
-  canWhiteCastleShort = s[0] == 'K' ? true : false;
-  canWhiteCastleLong = s[1] == 'Q' ? true : false;
-  canBlackCastleShort = s[2] == 'k' ? true : false;
-  canBlackCastleLong = s[3] == 'q' ? true : false;
+  canWhiteCastleShort = s.find('K') != std::string::npos ? true : false;
+  canWhiteCastleLong = s.find('Q') != std::string::npos ? true : false;
+  canBlackCastleShort = s.find('k') != std::string::npos ? true : false;
+  canBlackCastleLong = s.find('q') != std::string::npos ? true : false;
   ss >> s;
   enPassant = s;
   int n;
@@ -147,10 +147,86 @@ void GameState::setFEN(std::string fen) {
   move = n;
 }
 
+// ie. 1. e4 FEN: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1
 std::string GameState::getFEN() {
   std::stringstream ss;
-  return "";
+  for (char f = '8'; f >= '1'; f--) {
+    char numEmpty = '0';
+    for (char r = 'a'; r <= 'h'; r++) {
+      char curChar =
+          position.getTheGrid().at(std::string() + r + f)->nameShort()[0];
+      if (curChar == ' ') {
+        numEmpty++;
+      } else {
+        if (numEmpty != '0') {
+          ss << numEmpty;
+          numEmpty = '0';
+        }
+        ss << curChar;
+      }
+    }
+    if (numEmpty != '0') {
+      ss << numEmpty;
+      numEmpty = '0';
+    }
+    if (f != '1') ss << '/';
+  }
+  ss << ' ';
+  ss << (turn == Colour::WHITE ? 'w' : 'b');
+  ss << ' ';
+  ss << (canWhiteCastleShort ? "K" : "");
+  ss << (canWhiteCastleLong ? "Q" : "");
+  ss << (canBlackCastleShort ? "k" : "");
+  ss << (canBlackCastleLong ? "q" : "");
+  if (ss.str().back() == ' ') ss << '-';  // if no castles are legal
+  ss << ' ';
+  ss << enPassant;
+  ss << ' ';
+  ss << halfMoveClock;
+  ss << ' ';
+  ss << move;
+  std::string FEN = ss.str();
+  return FEN;
 }
+
+void GameState::playMove(std::string theMove) {
+  std::string src = (theMove.substr(0, 2));
+  std::string dst = (theMove.substr(2));
+  std::string ep = enPassant;
+
+  if (turn == Colour::BLACK) move++;
+  turn = turn == Colour::WHITE ? Colour::BLACK : Colour::WHITE;
+  enPassant = "-";
+  if (dynamic_cast<Pawn *>(position.getTheGrid().at(src)->piece)) {
+    halfMoveClock = 0;  // pawn advance
+    if (src[1] == '2' && dst[1] == '4')
+      enPassant = std::string() + src[0] + '3';
+    else if (src[1] == '7' && dst[1] == '5')
+      enPassant = std::string() + src[0] + '6';
+  }
+  if (position.getTheGrid().at(dst.substr(0, 2))->piece)
+    halfMoveClock = 0;  // piece capture
+
+  if (dynamic_cast<King *>(position.getTheGrid().at(src)->piece)) {
+    if (src == "e1") {
+      if (dst == "g1") {
+        canWhiteCastleShort = false;
+      } else if (dst == "c1") {
+        canWhiteCastleLong = false;
+      }
+    } else if (src == "e8") {
+      if (dst == "g8") {
+        canBlackCastleShort = false;
+      } else if (dst == "c8") {
+        canBlackCastleLong = false;
+      }
+    }
+  }
+
+  position.playMove(src, dst, ep);
+}
+
+void GameState::printPosition() { std::cout << position; }
 
 std::ostream &operator<<(std::ostream &out, const GameState &g) {
   out << "Turn: " << (g.turn == Colour::WHITE ? "White" : "Black") << std::endl;

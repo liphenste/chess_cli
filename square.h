@@ -16,6 +16,7 @@ class Square {
 
   void setPiece(Piece *p);
   std::string nameShort();
+  char nameChar();
   friend std::ostream &operator<<(std::ostream &out, const Square &s);
 };
 

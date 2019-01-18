@@ -10,6 +10,8 @@ void Square::setPiece(Piece *p) { piece = p; }
 
 std::string Square::nameShort() { return piece ? piece->nameShort() : " "; }
 
+char Square::nameChar() { return piece->nameChar(); }
+
 std::ostream &operator<<(std::ostream &out, const Square &s) {
   if (s.piece == nullptr)
     out << "No piece";
