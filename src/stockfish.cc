@@ -13,7 +13,7 @@ Stockfish::Stockfish(std::string FEN) {
   engineInput.close();
 
   system(
-      "node ../node_modules/stockfish/src/stockfish.js < engineInput.temp > "
+      "node node_modules/stockfish/src/stockfish.js < engineInput.temp > "
       "engineOutput.temp");
 
   std::ifstream engineOutput("engineOutput.temp");
