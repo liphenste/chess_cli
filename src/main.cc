@@ -19,7 +19,8 @@ int main(int argc, char* argv[]) {
   GameState game;
   string input;
 
-  cout << "Welcome to chess_cli" << endl;
+  cout << endl;
+  cout << "Welcome to chess_cli!" << endl;
   cout << endl;
 
   bool vsStockfish = false;
@@ -47,7 +48,8 @@ int main(int argc, char* argv[]) {
   cout << game;
   cout << "\"sf\": Stockfish plays your move." << endl;
   cout << "\"fen\": prints the FEN of this position." << endl;
-  cout << "\"d\" prints detailed information of this position." << endl;
+  cout << "\"d\": prints detailed information of this position." << endl;
+  cout << "\"l\": lists legal moves." << endl;
   cout << "\"q\": quits the program." << endl;
   cout << "\"help\": repeats these commands." << endl;
   cout << endl;
@@ -97,6 +99,9 @@ int main(int argc, char* argv[]) {
             << endl;
       } else if (input == "d") {
         cout << game;
+      } else if (input == "l") {
+        for (auto& lm : sf.getLegalMoves()) cout << lm << "  ";
+        cout << endl;
       } else {
         cout << "(Invalid move)" << endl;
       }

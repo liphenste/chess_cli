@@ -42,7 +42,7 @@ Here are some example FENs to try out:
 
 <h2>Setup</h2>
 
-**gcc** and **npm** are required for dependencies and compilation.
+**gcc 6.3.0** and **npm** are required for compilation and dependencies.
 
 Open a bash instance and navigate to your desired directory.
 Clone the repo:
