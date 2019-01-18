@@ -18,6 +18,18 @@ using namespace std;
 int main(int argc, char* argv[]) {
   GameState game;
   string input;
+
+  cout << "Welcome to chess_cli" << endl;
+  cout << endl;
+
+  bool vsStockfish = false;
+  cout << "Play with Stockfish? (y/n) (Otherwise 2-player human game): ";
+  if (cin >> input && input == "y") vsStockfish = true;
+
+  bool visualDisplay = false;
+  cout << "Visual display? (y/n): ";
+  if (cin >> input && input == "y") visualDisplay = true;
+
   cout << "Load FEN? (y/n): ";
   if (cin >> input && input == "y") {
     cout << "Paste FEN." << endl;
@@ -30,12 +42,7 @@ int main(int argc, char* argv[]) {
   } else {
     game.startState();
   }
-  bool visualDisplay = false;
-  cout << "Visual display? (y/n): ";
-  if (cin >> input && input == "y") visualDisplay = true;
-  bool vsStockfish = false;
-  cout << "Play with Stockfish? (y/n) (Otherwise game will play as 2 player): ";
-  if (cin >> input && input == "y") vsStockfish = true;
+
   cout << endl;
   cout << game;
   cout << "\"sf\": Stockfish plays your move." << endl;
