@@ -66,6 +66,7 @@ The make should have generated a chess_cli.exe file. All that's left is to run i
 
 <h2>To-do</h2>
 
+- Dockerize
 - Improve error handling
 - MVC Framework
   - Chess960 Model, Three-check Model
